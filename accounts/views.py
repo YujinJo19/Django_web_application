@@ -96,3 +96,16 @@ def profile(request, username):
         'person': person
     }
     return render(request, 'accounts/profile.html', context)
+
+
+def follow(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('accounts:login')
+
+    person = get_object_or_404(get_user_model(), pk=pk)
+    if person != request.user:
+        if person.followers.filter(pk=request.user.pk).exists():
+            person.followers.remove(request.user)
+        else:
+            person.followers.add(request.user)
+    return redirect('accounts:profile', person.username)

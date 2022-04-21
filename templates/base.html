@@ -9,39 +9,58 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'articles:index' %}">Home</a>
-          </li>
-          {% if request.user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'accounts:profile' user %}">Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'accounts:delete' %}">회원탈퇴</a>
-            </li>
-          {% else %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'accounts:signup' %}">Signup</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
-            </li>
-          {% endif %}
-        </ul>
+    <div class="container-fluid justify-content-around">
+      <div>
+        <a class="navbar-brand" href="{% url 'articles:index' %}">Main_Logo</a>
+      </div>
+      <div>
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
+      </div>
+      <div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'articles:index' %}"><i class="fa-solid fa-house"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'articles:create' %}"><i class="fa-regular fa-square-plus"></i></a>
+            </li>
+            {% if request.user.is_authenticated %}
+            <div class="btn-group">
+              <button class="btn dropdown-toggle btn-sm" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                <i class="fa-regular fa-user"></i>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'accounts:delete' %}">회원탈퇴</a>
+                </li>
+              </ul>
+            </div>
+            {% else %}
+            <div class="btn-group">
+              <button class="btn dropdown-toggle btn-sm" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                <i class="fa-regular fa-user"></i>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'accounts:signup' %}">Signup</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+                </li>
+              </ul>
+            </div>
+            {% endif %}
+          </ul>
+        </div>
       </div>
     </div>
   </nav>

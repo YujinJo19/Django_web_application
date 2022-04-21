@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>INDEX</h1>
+<h1>detail</h1>
 <div class="row">
-  {% for article in articles %}
-  <div class="card col-6 offset-3 justify-content-center mb-3">
+  <div class="card">
     <div class="d-flex justify-content-between mt-1">
       <span class="fw-bold">{{ article.user }}</span>
       <div class="btn-group">
@@ -40,22 +39,26 @@
       </div>
     </div>
     <hr>
-    <p>댓글 {{ article.comment_set.count }}개</p>
-    {% for comment in article.comment_set.all %}
+    <p>댓글 {{ comments.count }}개</p>
+    {% for comment in comments %}
     <div class="d-flex justify-content-between mb-1">
       <div>
         <span class="fw-bold m-0">{{ comment.user }}</span>
         <span>{{ comment.content }}</span>
       </div>
-      {% if comment.user == request.user %}
-        <form action="{% url 'articles:comments_delete' article.pk comment.pk %}" method="POST">
-          {% csrf_token %}
-          <button class="btn btn-outline-danger btn-sm">delete</button>
-        </form>
-      {% endif %}
+      <form action="{% url 'articles:comments_delete' article.pk comment.pk %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-outline-danger btn-sm">delete</button>
+      </form>
     </div>
     {% endfor %}
+    <p>댓글쓰기</p>
+    <form action="{% url 'articles:comments_create' article.pk %}" method="POST">
+      {% csrf_token %}
+      {{ comment_form.as_p }}
+      <button class="btn btn-outline-success btn-sm mb-3">submit</button>
+    </form>
+    <p class="text-secondary">{{ created_at }}</p>
   </div>
-  {% endfor %}
 </div>
 {% endblock content %}
